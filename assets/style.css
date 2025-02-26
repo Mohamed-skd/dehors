@@ -1,0 +1,34 @@
+@import url("./styles/Reset.css");
+@import url("./styles/Vars.css");
+@import url("./styles/Elements.css");
+@import url("./styles/Anims.css");
+
+/* BASE */
+body {
+  min-height: 100dvh;
+}
+body > * {
+  display: flow-root;
+}
+body > header {
+  h1 {
+    padding: 1rem;
+    width: fit-content;
+    @media (width > 40rem) {
+      padding: 1rem 4rem;
+    }
+  }
+}
+body > main {
+  margin: 1rem auto;
+  & > section {
+    margin: 1rem auto;
+    width: min(80rem, 100% - 1rem);
+  }
+}
+body > footer {
+  margin-top: 2rem;
+  padding: 0.2rem 2rem;
+}
+
+/* CMPS */
