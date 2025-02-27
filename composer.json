@@ -1,5 +1,5 @@
 {
-  "name": "mohsd/plein-air",
+  "name": "mohsd/dehors",
   "type": "library",
   "scripts": {
     "meta": "php meta.php"

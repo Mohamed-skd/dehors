@@ -6,7 +6,7 @@ import {
   FetchFuncs,
 } from "./scripts/Client.js";
 import { error } from "./scripts/Base.js";
-import { Copyright } from "./scripts/Elements.js";
+import { Copyright, ThemeSetter } from "./scripts/Elements.js";
 
 // UTILS
 const numFn = new NumberFuncs();
@@ -17,3 +17,4 @@ const fetchFn = new FetchFuncs();
 
 // APP
 new Copyright();
+new ThemeSetter();

@@ -1,5 +1,5 @@
 {
-  "name": "plein-air",
+  "name": "dehors",
   "version": "1.0.0",
   "scripts": {
     "meta": "node meta.js"

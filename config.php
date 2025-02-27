@@ -24,4 +24,5 @@ $domFn = new Func\DomFn();
 $envDatas = $fileFn->getEnv();
 
 // APP 
-$title = "Php";
+$title = "Dehors !";
+$prodCtrl = new Controller\Products(STORAGE . "products.json");
