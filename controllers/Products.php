@@ -26,14 +26,14 @@ class Products
     }
   }
 
-  function getProduct(string $id)
+  function getProduct(string $name)
   {
-    return array_filter($this->list, function ($val) use ($id) {
-      return $val["id"] === $id;
-    })[0];
+    return array_filter($this->list, function ($val) use ($name) {
+      return str_contains(strtolower($val["name"]), strtolower($name));
+    });
   }
   function getCat(string $cat)
   {
-    return $this->cats[$cat];
+    return $this->cats[$cat] ?? [];
   }
 }

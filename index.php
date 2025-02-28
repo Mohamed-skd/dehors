@@ -1,7 +1,42 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"] .  "/config.php";
 
-$products = $prodCtrl->list;
+if (isset($_POST["search"])) {
+  $search = $strFn->sanitize($_POST["search"]);
+  $products = $search ? $prodCtrl->getProduct($search) : $prodCtrl->list;
+  if (!$products) {
+    echo "<h2>Aucun produit: \"$search\"</h2>";
+    exit;
+  }
+
+  foreach ($products as &$prod) {
+    require CMPS . "product.php";
+  }
+  exit;
+} elseif (isset($_POST["cat"])) {
+  $cat = $strFn->sanitize($_POST["cat"]);
+  $products = $cat ? $prodCtrl->getCat($cat) : $prodCtrl->list;
+  if (!$products) {
+    echo "<h2>Aucun produit pour: \"$cat\"</h2>";
+    exit;
+  }
+
+  foreach ($products as &$prod) {
+    require CMPS . "product.php";
+  }
+  exit;
+}
+
+if (isset($_GET["search"])) {
+  $search = $strFn->sanitize($_GET["search"]);
+  $products = $search ? $prodCtrl->getProduct($search) : $prodCtrl->list;
+} elseif (isset($_GET["cat"])) {
+  $cat = $strFn->sanitize($_GET["cat"]);
+  $products = $cat ? $prodCtrl->getCat($cat) : $prodCtrl->list;
+} else {
+  $products = $prodCtrl->list;
+}
+
 $cats = array_keys($prodCtrl->cats);
 ?>
 
@@ -10,17 +45,8 @@ $cats = array_keys($prodCtrl->cats);
 
 <head>
   <?php require_once CMPS . "head.php" ?>
-  <style>
-  .grid {
-    @media (width>40rem) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (width>60rem) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  </style>
+  <script type="module" src="<?= ASSETS . "home.js" ?>"></script>
+  <link rel="stylesheet" href="<?= SITE . "assets/home.css" ?>">
 </head>
 
 <body>
@@ -29,32 +55,31 @@ $cats = array_keys($prodCtrl->cats);
   <main>
     <section>
       <nav>
-        <input type="search" name="search" placeholder="🔍">
+        <input type="search" name="search" placeholder="🔍" maxlength="100">
 
         <div class="flex">
-          <?php foreach ($cats as &$cat): ?>
-          <button class="bt"><?= ucfirst($cat) ?></button>
+          <button class="<?= isset($cat) ? "bt" : "bt selected" ?>">☀️</button>
+          <?php foreach ($cats as &$catname): ?>
+          <button
+            class="<?= strtolower($cat) === strtolower($catname) ? "bt selected" : "bt" ?>"><?= ucfirst($catname) ?></button>
           <?php endforeach ?>
         </div>
       </nav>
 
       <div class="grid">
+        <?php if (!$products): ?>
+        <h2>Aucun produit <?= isset($search) ? ": $search" : "pour: $cat" ?></h2>
+        <?php else: ?>
         <?php foreach ($products as &$prod): ?>
-        <article data-id="<?= $prod["id"] ?>">
-          <h3><?= $prod["name"] ?></h3>
-
-          <a href="<?= $prod["link"] ?>">
-            <img src="<?= IMGS . $prod["img"] ?>" alt="<?= $prod["name"] ?>">
-          </a>
-
-          <p><?= $prod["desc"] ?></p>
-        </article>
+        <?php require CMPS . "product.php" ?>
         <?php endforeach ?>
+        <?php endif ?>
       </div>
     </section>
   </main>
 
   <?php require_once CMPS . "footer.php" ?>
+  <div id="to-top"></div>
 </body>
 
 </html>

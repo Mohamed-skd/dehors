@@ -160,6 +160,19 @@ export class Copyright {
     }
   }
 }
+export class TopButton {
+  static isSet = false;
+
+  constructor() {
+    if (TopButton.isSet) throw new Error("Top Button already set.");
+    TopButton.isSet = true;
+
+    const topBt = domFn.select("#to-top");
+    if (!domFn.isElem(topBt)) throw new Error(`Invalid DOM root: ${topBt}.`);
+
+    topBt.addEventListener("click", () => scroll(0, 0));
+  }
+}
 export class Canvas {
   /**
    * Boosted Canvas elem

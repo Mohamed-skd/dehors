@@ -4,8 +4,20 @@
 @import url("./styles/Anims.css");
 
 /* BASE */
+:root {
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   min-height: 100dvh;
+  background: linear-gradient(
+    225deg,
+    hsl(var(--clr-darker), 0.2),
+    transparent,
+    hsl(var(--clr-darker), 0.2)
+  );
 }
 body > * {
   display: flow-root;
