@@ -1,0 +1,1 @@
+import{NumberFuncs,StringFuncs,DomFuncs,DateFuncs,FetchFuncs}from"./scripts/Client.js";import{error}from"./scripts/Base.js";import{Copyright,ThemeSetter,TopButton}from"./scripts/Elements.js";let domFn=new DomFuncs,fetchFn=new FetchFuncs,strFn=new StringFuncs,numFn=new NumberFuncs,dateFn=new DateFuncs;new Copyright,new ThemeSetter,new TopButton;export{domFn,fetchFn,strFn};
