@@ -6,8 +6,8 @@ require_once SRC . "utils/Base.php";
 session_start();
 
 // constants
-define("SITE", "https://mohsd-dehors.free.nf");
-// define("SITE", "http://localhost:8080/");
+// define("SITE", "https://mohsd-dehors.free.nf");
+define("SITE", "http://localhost:8080/");
 define("STORAGE", SRC . "utils/storage/");
 define("CMPS", SRC . "components/");
 define("ASSETS", SITE . "dist/");
