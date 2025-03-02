@@ -1,7 +1,6 @@
 import { domFn, strFn, fetchFn } from "./script.js";
 import { error } from "./scripts/Base.js";
 
-const url = new URL(location.href, location.origin);
 const grid = domFn.select("section>.grid");
 const navSearch = domFn.select("nav > input");
 const navSect = domFn.select("nav > div.flex");
@@ -58,5 +57,9 @@ async function sort(e) {
   }
 }
 
-navSearch.addEventListener("input", search, { passive: true });
-navSect.addEventListener("click", sort);
+try {
+  navSearch.addEventListener("input", search, { passive: true });
+  navSect.addEventListener("click", sort);
+} catch (err) {
+  error(err);
+}
