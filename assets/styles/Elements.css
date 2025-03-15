@@ -50,7 +50,7 @@
     padding: 1rem;
     font-weight: bold;
   }
-  & > input,
+  & input,
   textarea {
     box-shadow: -0.2rem -0.2rem 0.2rem black;
   }
@@ -69,6 +69,19 @@
   }
 }
 
+.share {
+  padding: 0.4rem 2rem;
+  font-size: 2rem;
+  background: linear-gradient(
+    hsl(var(--clr-lighter)),
+    hsl(var(--clr-lighter), 0.6),
+    hsl(var(--clr-lighter), 0.4),
+    hsl(var(--clr-lighter), 0.6),
+    hsl(var(--clr-lighter))
+  );
+  border-radius: 2rem/2rem;
+}
+
 /* CMPS */
 #notifications {
   position: fixed;
@@ -77,6 +90,9 @@
 
   p {
     padding: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
     background-color: hsl(240, 60%, 80%);
     &.success {
       background-color: hsl(120, 60%, 80%);
@@ -127,7 +143,7 @@
 #theme {
   position: absolute;
   z-index: 800;
-  inset: 6rem 2rem auto auto;
+  inset: auto 6rem 1rem auto;
 
   button {
     width: 2rem;

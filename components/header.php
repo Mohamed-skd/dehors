@@ -5,7 +5,6 @@
     <?php unset($_SESSION["notification"]) ?>
     <?php endif ?>
   </aside>
-  <aside id="theme"></aside>
 
   <h1><?= $title ?></h1>
 </header>

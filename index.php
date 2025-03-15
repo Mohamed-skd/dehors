@@ -9,9 +9,12 @@ if (isset($_POST["search"])) {
     exit;
   }
 
+  echo "<h2>" . (isset($search) ? "Recherche: " : "Produits") . "</h2>";
+  echo "<div class=\"grid\">";
   foreach ($products as &$prod) {
     require CMPS . "product.php";
   }
+  echo "</div>";
   exit;
 } elseif (isset($_POST["cat"])) {
   $cat = $strFn->sanitize($_POST["cat"]);
@@ -21,9 +24,12 @@ if (isset($_POST["search"])) {
     exit;
   }
 
+  echo "<h2>" . (isset($cat) ? ucfirst($products[0]["cat"]) : "Produits") . "</h2>";
+  echo "<div class=\"grid\">";
   foreach ($products as &$prod) {
     require CMPS . "product.php";
   }
+  echo "</div>";
   exit;
 }
 
@@ -45,8 +51,6 @@ $cats = array_keys($prodCtrl->cats);
 
 <head>
   <?php require_once CMPS . "head.php" ?>
-  <script type="module" src="<?= ASSETS . "home.js" ?>"></script>
-  <link rel="stylesheet" href="<?= SITE . "assets/home.css" ?>">
 </head>
 
 <body>
@@ -66,14 +70,17 @@ $cats = array_keys($prodCtrl->cats);
         </div>
       </nav>
 
-      <div class="grid">
+      <div id="products">
         <?php if (!$products): ?>
         <h2>Aucun produit <?= isset($search) ? ": $search" : "pour: $cat" ?></h2>
         <?php else: ?>
-        <?php foreach ($products as &$prod): ?>
-        <?php require CMPS . "product.php" ?>
-        <?php endforeach ?>
-        <?php endif ?>
+        <h2><?= isset($cat) ? ucfirst($cat) : (isset($search) ? "Recherche: " : "Produits") ?></h2>
+        <div class="grid">
+          <?php foreach ($products as &$prod): ?>
+          <?php require CMPS . "product.php" ?>
+          <?php endforeach ?>
+          <?php endif ?>
+        </div>
       </div>
     </section>
   </main>

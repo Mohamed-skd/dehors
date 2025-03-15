@@ -1,4 +1,5 @@
 import { NumberFuncs, DomFuncs, FetchFuncs } from "./Client.js";
+import { error, scream } from "./Base.js";
 
 const numFn = new NumberFuncs();
 const domFn = new DomFuncs();
@@ -12,21 +13,25 @@ export class Notification {
    * @param {number} delay Delay (in seconds) before removing the notification
    */
   constructor(content, type, delay = 2) {
-    const notifications = domFn.select("#notifications");
-    if (!domFn.isElem(notifications))
-      throw new Error(`Invalid DOM root: ${notifications}.`);
+    try {
+      const notifications = domFn.select("#notifications");
+      if (!domFn.isElem(notifications))
+        scream(`Invalid DOM root: ${notifications}.`);
 
-    const p = domFn.create("p");
-    this.content = content;
-    this.type = type;
-    this.delay = delay;
+      const p = domFn.create("p");
+      this.content = content;
+      this.type = type;
+      this.delay = delay;
 
-    if (this.type) domFn.modClass(p, this.type);
-    p.textContent = this.content;
-    notifications.append(p);
-    setTimeout(() => {
-      p.remove();
-    }, 1000 * this.delay);
+      if (this.type) domFn.modClass(p, this.type);
+      p.textContent = this.content;
+      notifications.append(p);
+      setTimeout(() => {
+        p.remove();
+      }, 1000 * this.delay);
+    } catch (err) {
+      error(err);
+    }
   }
 }
 export class ThemeSetter {
@@ -37,26 +42,29 @@ export class ThemeSetter {
    * @param {HTMLElement[]} elems
    */
   constructor(elems = null) {
-    if (ThemeSetter.isSet) throw new Error("ThemeSetter already set.");
-    ThemeSetter.isSet = true;
+    try {
+      if (ThemeSetter.isSet) scream("Already Set.");
+      ThemeSetter.isSet = true;
 
-    const themeDom = domFn.select("#theme");
-    if (!domFn.isElem(themeDom))
-      throw new Error(`Invalid DOM root: ${themeDom}.`);
+      const themeDom = domFn.select("#theme");
+      if (!domFn.isElem(themeDom)) scream(`Invalid DOM root: ${themeDom}.`);
 
-    const mediaScheme = matchMedia("(prefers-color-scheme:dark)");
-    const button = domFn.create("button", { title: "THEME" });
-    this.elems = elems;
-    this.histTheme = fetchFn.local("dark-theme");
-    this.darkTheme = this.histTheme.get() ?? mediaScheme.matches;
+      const mediaScheme = matchMedia("(prefers-color-scheme:dark)");
+      const button = domFn.create("button", { title: "THEME" });
+      this.elems = elems;
+      this.histTheme = fetchFn.local("dark-theme");
+      this.darkTheme = this.histTheme.get() ?? mediaScheme.matches;
 
-    this.setTheme();
-    themeDom.append(button);
-    button.addEventListener("click", this.togTheme.bind(this));
-    mediaScheme.addEventListener("change", () => {
-      this.darkTheme = mediaScheme.matches;
       this.setTheme();
-    });
+      themeDom.append(button);
+      button.addEventListener("click", this.togTheme.bind(this));
+      mediaScheme.addEventListener("change", () => {
+        this.darkTheme = mediaScheme.matches;
+        this.setTheme();
+      });
+    } catch (err) {
+      error(err);
+    }
   }
 
   setTheme() {
@@ -87,41 +95,45 @@ export class SectionsSetter {
   static isSet = false;
 
   constructor() {
-    if (SectionsSetter.isSet) throw new Error("SectionsSetter already set.");
-    SectionsSetter.isSet = true;
+    try {
+      if (SectionsSetter.isSet) scream("SectionsSetter already set.");
+      SectionsSetter.isSet = true;
 
-    const navPage = domFn.select("#nav-page");
-    let liste;
-    if (navPage) {
-      liste = domFn.create("ul", { class: "flex" });
-      navPage.append(liste);
-    }
-
-    const sections = domFn.selectAll("main > section");
-    if (!sections.length) throw new Error(`No sections: ${sections}.`);
-
-    for (const sect of sections) {
-      if (!domFn.isElem(sect)) continue;
-
-      const id = sect.id.trim();
-      if (!id) continue;
-
-      const name = id[0].toUpperCase() + id.replace("-", " ").slice(1);
-      const title = domFn.create("h2");
-      title.textContent = name;
-      sect.prepend(title);
-
-      if (domFn.isElem(liste)) {
-        const listElem = domFn.create("li");
-        const link = domFn.create("a", {
-          class: "link",
-          href: `#${id}`,
-          target: "_self",
-        });
-        link.textContent = name;
-        listElem.append(link);
-        liste.append(listElem);
+      const navPage = domFn.select("#nav-page");
+      let liste;
+      if (navPage) {
+        liste = domFn.create("ul", { class: "flex" });
+        navPage.append(liste);
       }
+
+      const sections = domFn.selectAll("main > section");
+      if (!sections.length) scream(`No sections: ${sections}.`);
+
+      for (const sect of sections) {
+        if (!domFn.isElem(sect)) continue;
+
+        const id = sect.id.trim();
+        if (!id) continue;
+
+        const name = id[0].toUpperCase() + id.replace("-", " ").slice(1);
+        const title = domFn.create("h2");
+        title.textContent = name;
+        sect.prepend(title);
+
+        if (domFn.isElem(liste)) {
+          const listElem = domFn.create("li");
+          const link = domFn.create("a", {
+            class: "link",
+            href: `#${id}`,
+            target: "_self",
+          });
+          link.textContent = name;
+          listElem.append(link);
+          liste.append(listElem);
+        }
+      }
+    } catch (err) {
+      error(err);
     }
   }
 }
@@ -137,26 +149,32 @@ export class Copyright {
     content = "Par ",
     link = { ref: "https://moh-sd.free.nf/", content: "Moh. SD" }
   ) {
-    if (Copyright.isSet) throw new Error("Copyright already set.");
-    Copyright.isSet = true;
+    try {
+      if (Copyright.isSet) scream("Copyright already set.");
+      Copyright.isSet = true;
 
-    const copyright = domFn.select("#copyright");
-    if (!domFn.isElem(copyright))
-      throw new Error(`Invalid DOM root: ${copyright}.`);
+      const copyright = domFn.select("#copyright");
+      if (!domFn.isElem(copyright)) scream(`Invalid DOM root: ${copyright}.`);
 
-    const date = new Date();
-    this.content = content;
-    this.link = link;
+      const date = new Date();
+      this.content = content;
+      this.link = link;
 
-    copyright.textContent = "";
-    if (!this.content && !this.link) {
-      copyright.textContent = `© ${date.getFullYear()}`;
-    } else if (!this.link) {
-      copyright.append(this.content, ` © ${date.getFullYear()}`);
-    } else {
-      const anchor = domFn.create("a", { href: this.link.ref, class: "link" });
-      anchor.textContent = this.link.content;
-      copyright.append(this.content, anchor, ` © ${date.getFullYear()}`);
+      copyright.textContent = "";
+      if (!this.content && !this.link) {
+        copyright.textContent = `© ${date.getFullYear()}`;
+      } else if (!this.link) {
+        copyright.append(this.content, ` © ${date.getFullYear()}`);
+      } else {
+        const anchor = domFn.create("a", {
+          href: this.link.ref,
+          class: "link",
+        });
+        anchor.textContent = this.link.content;
+        copyright.append(this.content, anchor, ` © ${date.getFullYear()}`);
+      }
+    } catch (err) {
+      error(err);
     }
   }
 }
@@ -164,13 +182,17 @@ export class TopButton {
   static isSet = false;
 
   constructor() {
-    if (TopButton.isSet) throw new Error("Top Button already set.");
-    TopButton.isSet = true;
+    try {
+      if (TopButton.isSet) scream("Top Button already set.");
+      TopButton.isSet = true;
 
-    const topBt = domFn.select("#to-top");
-    if (!domFn.isElem(topBt)) throw new Error(`Invalid DOM root: ${topBt}.`);
+      const topBt = domFn.select("#to-top");
+      if (!domFn.isElem(topBt)) scream(`Invalid DOM root: ${topBt}.`);
 
-    topBt.addEventListener("click", () => scroll(0, 0));
+      topBt.addEventListener("click", () => scroll(0, 0));
+    } catch (err) {
+      error(err);
+    }
   }
 }
 export class Canvas {
@@ -179,12 +201,16 @@ export class Canvas {
    * @param {HTMLCanvasElement} canvas
    */
   constructor(canvas) {
-    if (!(canvas instanceof HTMLCanvasElement))
-      throw new Error(`Invalid canvas element: ${canvas}.`);
+    try {
+      if (!(canvas instanceof HTMLCanvasElement))
+        scream(`Invalid canvas element: ${canvas}.`);
 
-    this.canvas = canvas;
-    this.ctxt = canvas.getContext("2d");
-    this.ctxt.translate(this.canvas.width / 2, this.canvas.height / 2);
+      this.canvas = canvas;
+      this.ctxt = canvas.getContext("2d");
+      this.ctxt.translate(this.canvas.width / 2, this.canvas.height / 2);
+    } catch (err) {
+      error(err);
+    }
   }
 
   /**
@@ -350,25 +376,31 @@ export class Canvas {
     this.ctxt.closePath();
   }
 }
-export class Card {
-  /**
-   * Article tmpl elem
-   * @param {string} title Card title
-   * @param {string} img Card image
-   * @param {string} desc Card description
-   */
-  constructor(title, img, desc) {
-    this.title = title;
-    this.img = img;
-    this.desc = desc;
-    this.article = domFn.create("article");
+export class Share {
+  static isSet = false;
 
-    const h3 = domFn.create("h3");
-    const imgDom = domFn.create("img", { src: this.img, alt: this.title });
-    const p = domFn.create("p");
+  constructor() {
+    try {
+      if (Share.isSet) scream("Already Set.");
+      Share.isSet = true;
 
-    h3.textContent = this.title;
-    p.textContent = this.desc;
-    this.article.append(h3, imgDom, p);
+      const bts = domFn.selectAll(".share");
+      bts.forEach((bt) => {
+        domFn.modClass(bt, "bt");
+        bt.textContent = "Partager";
+        bt.addEventListener("click", this.listener);
+      });
+    } catch (err) {
+      error(err);
+    }
+  }
+
+  async listener() {
+    try {
+      await navigator.clipboard.writeText(location.href);
+    } catch (err) {
+      return error(err);
+    }
+    new Notification("Lien copié !", "success");
   }
 }

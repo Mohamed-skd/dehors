@@ -1,9 +1,9 @@
 <?php
 // LOGGERS 
-function dump(mixed $elem, ?string $name = null)
+function dump(mixed $var, ?string $name = null)
 {
   echo "\n\nℹ️ {$name}:\n";
-  var_dump($elem);
+  var_dump($var);
   echo "\n";
 }
 function todo(string $info)
@@ -11,9 +11,9 @@ function todo(string $info)
   echo "\n❕ À faire: $info\n";
   return false;
 }
-function scream(string $exp)
+function scream(string $message)
 {
-  throw new Exception($exp);
+  throw new Exception($message);
 }
 function error(Exception|Error $err)
 {

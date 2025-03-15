@@ -98,13 +98,13 @@ export class StringFuncs {
   }
 
   sanitize(str, limit = 100) {
-    if (!str) return;
-    if (typeof str !== "string") return;
+    if (!str) return null;
+    if (typeof str !== "string") return null;
 
     const sanitized = str.trim();
-    if (!sanitized) return;
+    if (!sanitized) return null;
 
-    if (sanitized.length > limit) return;
+    if (sanitized.length > limit) return null;
     return sanitized;
   }
 }
@@ -274,7 +274,7 @@ export class FetchFuncs {
 
     for (let i = 0; i < values.length; i++) {
       const tab = values[i].split("=");
-      obj[tab[0]] = tab[1];
+      obj[tab[0]] = tab[1].trim();
     }
     return [tab[0], obj];
   }

@@ -16,6 +16,8 @@ abstract class DB
     ?string $pwd = null,
     string $engine = "mysql"
   ) {
+    if (isset(self::$db)) return;
+
     if ($host) {
       self::$dsn = "$engine:host=$host;dbname=$dbname";
       self::$db = new PDO(self::$dsn, $user, $pwd);
