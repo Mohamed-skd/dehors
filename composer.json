@@ -1,0 +1,22 @@
+{
+  "name": "mohsd/dehors",
+  "type": "library",
+  "scripts": {
+    "meta": "php meta.php"
+  },
+  "autoload": {
+    "psr-4": {
+      "Util\\": "utils/",
+      "Func\\": "utils/",
+      "Controller\\": "controllers/",
+      "Model\\": "models/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Mohamed",
+      "email": "contactdiabysn@gmail.com"
+    }
+  ],
+  "require": {}
+}
