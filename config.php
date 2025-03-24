@@ -10,12 +10,13 @@ session_start();
 define("SITE", "http://localhost:8080/");
 define("STORAGE", SRC . "utils/storage/");
 define("CMPS", SRC . "components/");
-define("ASSETS", SITE . "dist/");
-// define("ASSETS", SITE . "assets/");
+// define("ASSETS", SITE . "dist/");
+define("ASSETS", SITE . "assets/");
 define("IMGS", SITE . "assets/imgs/");
 define("DESC", "");
 
 // funcs 
+$dateFn = new Func\DateFn();
 $fileFn = new Func\FileFn();
 $strFn = new Func\StringFn();
 

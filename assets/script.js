@@ -1,6 +1,6 @@
 import { error } from "./scripts/base.js";
 import { StringFuncs, DomFuncs, FetchFuncs } from "./scripts/client.js";
-import { Copyright, TopButton, ThemeSetter } from "./scripts/lib.js";
+import { TopButton, ThemeSetter } from "./scripts/lib.js";
 
 // UTILS
 const strFn = new StringFuncs();
@@ -8,7 +8,6 @@ const domFn = new DomFuncs();
 const fetchFn = new FetchFuncs();
 
 // APP
-new Copyright();
 new ThemeSetter();
 new TopButton();
 

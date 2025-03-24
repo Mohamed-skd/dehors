@@ -1,5 +1,5 @@
 <footer>
-  <p id="copyright"></p>
+  <?php require_once CMPS . "copyright.php" ?>
 </footer>
 
 <aside id="theme"></aside>
