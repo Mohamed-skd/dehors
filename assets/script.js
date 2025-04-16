@@ -72,9 +72,5 @@ async function sort(e) {
   }
 }
 
-try {
-  navSearch.addEventListener("input", search, { passive: true });
-  navSect.addEventListener("click", sort);
-} catch (err) {
-  error(err);
-}
+navSearch.addEventListener("input", search, { passive: true });
+navSect.addEventListener("click", sort);
