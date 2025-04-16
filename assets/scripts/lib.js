@@ -391,19 +391,27 @@ export class Canvas {
 }
 export class Share {
   static isSet = false;
+  link;
   notification;
 
-  constructor(notification) {
+  /**
+   * Share buttons (copy link to clipboard)
+   * @param {string} btText Buttons text content
+   * @param {string} notification Notification to display when buttons are clicked
+   * @param {string} link The link to share
+   */
+  constructor(btText, notification, link) {
     try {
       if (Share.isSet) throw new Error("Already Set.");
       Share.isSet = true;
 
+      this.link = link;
       this.notification = notification;
       const bts = domFn.selectAll(".share");
       bts.forEach((bt) => {
         domFn.modClass(bt, "bt");
-        bt.textContent = "Partager";
-        bt.addEventListener("click", this.listener);
+        bt.textContent = btText;
+        bt.addEventListener("click", this.listener.bind(this));
       });
     } catch (err) {
       error(err);
@@ -412,7 +420,8 @@ export class Share {
 
   async listener() {
     try {
-      await navigator.clipboard.writeText(location.href);
+      this.link = this.link ? this.link : location.href;
+      await navigator.clipboard.writeText(this.link);
     } catch (err) {
       return error(err);
     }
