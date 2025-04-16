@@ -8,7 +8,7 @@ function dump(mixed $var, ?string $name = null)
 }
 function todo(string $info)
 {
-  echo "\n❕ À faire: $info\n";
+  echo "\n❕ To do: $info\n";
   return false;
 }
 function error(Exception|Error $err)
