@@ -234,7 +234,7 @@ export class FetchFuncs {
 
     for (const key in value) {
       const val = `${value[key]}`.trim();
-      req += `${encodeURIComponent(key)}=${encodeURIComponent(val)}&`;
+      req += `?${encodeURIComponent(key)}=${encodeURIComponent(val)}&`;
     }
     return req;
   }
