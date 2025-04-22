@@ -27,7 +27,7 @@ async function search() {
     const payload = {
       search: value ?? "",
     };
-    history.replaceState(null, null, `?${fetchFn.objToReq(payload)}`);
+    history.replaceState(null, null, fetchFn.objToReq(payload));
     timeout = setTimeout(async () => {
       const res = await fetchFn.post(payload, "text");
 
