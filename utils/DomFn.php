@@ -4,12 +4,12 @@ namespace Func;
 
 class DomFn
 {
-  function create(string $tag, string $value, array $attributes = [], bool $open = true)
+  function create(string $tag, string $content, array $attributes = [], bool $open = true)
   {
     $attrs = "";
-    foreach ($attributes as $k => &$a) {
-      $attrs .= " $k=\"$a\"";
+    foreach ($attributes as $name => &$value) {
+      $attrs .= " $name=\"$value\"";
     }
-    return $open ? "<$tag$attrs>$value</$tag>\n" : "</$tag$attrs>\n";
+    return $open ? "\n<$tag$attrs>$content</$tag>\n" : "\n</$tag$attrs>\n";
   }
 }

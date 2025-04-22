@@ -1,4 +1,4 @@
-import { error } from "./scripts/base.js";
+import { errorLog } from "./scripts/base.js";
 import { StringFuncs, DomFuncs, FetchFuncs } from "./scripts/client.js";
 import { TopButton, ThemeSetter } from "./scripts/lib.js";
 
@@ -29,7 +29,7 @@ async function search() {
     };
     history.replaceState(null, null, `?${fetchFn.objToReq(payload)}`);
     timeout = setTimeout(async () => {
-      const res = await fetchFn.post(location.href, payload, "text");
+      const res = await fetchFn.post(payload, "text");
 
       navBts.forEach((bt) => domFn.modClass(bt, "selected", "del"));
       domFn.removeChildren(products);
@@ -37,7 +37,7 @@ async function search() {
       domFn.appendHtml(products, res);
     }, 400);
   } catch (err) {
-    return error(err);
+    return errorLog(err);
   }
 }
 /**
@@ -59,7 +59,7 @@ async function sort(e) {
       cat: value === "☀️" ? "" : value,
     };
     history.replaceState(null, null, `?${fetchFn.objToReq(payload)}`);
-    const res = await fetchFn.post(location.href, payload, "text");
+    const res = await fetchFn.post(payload, "text");
 
     navBts.forEach((bt) => domFn.modClass(bt, "selected", "del"));
     domFn.modClass(bt, "selected");
@@ -68,7 +68,7 @@ async function sort(e) {
     domFn.modClass(products, "loading", "del");
     domFn.appendHtml(products, res);
   } catch (err) {
-    return error(err);
+    return errorLog(err);
   }
 }
 

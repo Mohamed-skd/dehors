@@ -19,20 +19,21 @@ class Csv
 
       $fd = fopen($file, "r");
       $this->src = file_get_contents($file);
-
       while ($line = fgetcsv($fd)) {
         $this->lines[] = $line;
       }
 
       $headings = $this->lines[0];
       $datas = array_slice($this->lines, 1);
-      foreach ($datas as $k => &$data) {
+      foreach ($datas as $i => &$data) {
         foreach ($data as $j => &$elem) {
-          $this->parsed[$headings[$j]][$k] = $elem;
+          $this->parsed[$headings[$j]][$i] = $elem;
         }
       }
+
+      fclose($fd);
     } catch (Exception | Error $err) {
-      error($err);
+      errorLog($err);
     }
   }
 }

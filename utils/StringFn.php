@@ -11,8 +11,7 @@ class StringFn
 
   function sanitize(string $input, int $size = 100)
   {
-    global $strFn;
-    $input = $strFn->escape($input);
+    $input = $this->escape($input);
     if (!$input || strlen($input) > $size) return null;
     return $input;
   }

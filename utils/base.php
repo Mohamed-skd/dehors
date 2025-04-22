@@ -1,20 +1,24 @@
 <?php
 // LOGGERS 
-function dump(mixed $var, ?string $name = null)
+function logInfo(string $message)
 {
-  echo "\n\nℹ️ {$name}:\n";
-  var_dump($var);
-  echo "\n";
+  echo "\nℹ️  $message ℹ️\n";
 }
-function todo(string $info)
+function logSuccess(string $message)
 {
-  echo "\n❕ To do: $info\n";
-  return false;
+  echo "\n✅ $message ✅\n";
 }
-function error(Exception|Error $err)
+function logError(string $message)
 {
-  echo "\n❌ Oups ! An error occured 😔.\n";
-  print_r($err);
-  echo "\n";
+  echo "\n❌ $message ❌\n";
+}
+function detailLog($detail)
+{
+  print_r($detail);
+}
+function errorLog(Exception|Error $error)
+{
+  logError("Oups ! An error occured 😔");
+  print_r($error);
   return false;
 }

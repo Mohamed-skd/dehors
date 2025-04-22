@@ -22,7 +22,7 @@ class Products
       }
       shuffle($this->list);
     } catch (Exception | Error $err) {
-      error($err);
+      errorLog($err);
     }
   }
 
