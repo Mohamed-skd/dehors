@@ -27,7 +27,7 @@ async function search() {
     const payload = {
       search: value ?? "",
     };
-    history.replaceState(null, null, fetchFn.objToReq(payload));
+    history.replaceState(null, null, fetchFn.objToHttpReq(payload));
     timeout = setTimeout(async () => {
       const res = await fetchFn.post(payload, "text");
 
@@ -58,7 +58,7 @@ async function sort(e) {
     const payload = {
       cat: value === "☀️" ? "" : value,
     };
-    history.replaceState(null, null, fetchFn.objToReq(payload));
+    history.replaceState(null, null, fetchFn.objToHttpReq(payload));
     const res = await fetchFn.post(payload, "text");
 
     navBts.forEach((bt) => domFn.modClass(bt, "selected", "del"));
