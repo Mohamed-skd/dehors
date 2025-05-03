@@ -5,19 +5,15 @@ require_once SRC . "vendor/autoload.php";
 require_once SRC . "utils/base.php";
 session_start();
 
-// constants
-// define("SITE", "https://mohsd-dehors.free.nf/");
-define("SITE", "http://localhost:8080/");
-define("STORAGE", SRC . "utils/storage/");
-define("CMPS", SRC . "components/");
-// define("ASSETS", SITE . "dist/");
-define("ASSETS", SITE . "assets/");
-define("IMGS", SITE . "assets/imgs/");
-define("DESC", "");
+// const SITE = "https://mohsd-dehors.free.nf/";
+const SITE = "http://localhost:8080/";
+const STORAGE = SRC . "utils/storage/";
+const CMPS = SRC . "components/";
+// const ASSETS = SITE . "dist/";
+const ASSETS = SITE . "assets/";
+const IMGS = SITE . "assets/imgs/";
+const DESC = "";
 
-// funcs 
-$dateFn = new Func\DateFn();
-$fileFn = new Func\FileFn();
 $strFn = new Func\StringFn();
 
 // APP 

@@ -8,6 +8,7 @@
     "psr-4": {
       "Util\\": "utils/",
       "Func\\": "utils/",
+      "Lib\\": "utils/lib/",
       "Controller\\": "controllers/",
       "Model\\": "models/"
     }

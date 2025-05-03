@@ -8,9 +8,8 @@ use PDO;
 
 abstract class DB
 {
-  private static bool $isSet = false;
-  private static string $dsn;
   private static PDO $db;
+  private static bool $isSet = false;
 
   protected static function setDB(
     string $dbname,
@@ -23,11 +22,11 @@ abstract class DB
       if (self::$isSet) throw new Exception("Already set");
 
       if ($host) {
-        self::$dsn = "$engine:host=$host;dbname=$dbname";
-        self::$db = new PDO(self::$dsn, $user, $pwd);
+        $dsn = "$engine:host=$host;dbname=$dbname";
+        self::$db = new PDO($dsn, $user, $pwd);
       } else {
-        self::$dsn = "$engine:$dbname";
-        self::$db = new PDO(self::$dsn);
+        $dsn = "$engine:$dbname";
+        self::$db = new PDO($dsn);
       }
       self::$isSet = true;
       return true;

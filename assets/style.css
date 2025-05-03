@@ -13,12 +13,6 @@
 body {
   position: relative;
   min-height: 100dvh;
-  background: linear-gradient(
-    225deg,
-    hsl(var(--clr-darker), 0.2),
-    transparent,
-    hsl(var(--clr-darker), 0.2)
-  );
 }
 body > * {
   display: flow-root;

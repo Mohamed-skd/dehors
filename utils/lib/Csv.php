@@ -1,13 +1,13 @@
 <?php
 
-namespace Util;
+namespace Lib;
 
 use Error;
 use Exception;
 
 class Csv
 {
-  public string $src;
+  public string $content;
   public array $lines;
   public array $parsed;
 
@@ -18,7 +18,9 @@ class Csv
       if (pathinfo($file, PATHINFO_EXTENSION) !== "csv") throw new Exception("Invalid csv: $file.");
 
       $fd = fopen($file, "r");
-      $this->src = file_get_contents($file);
+      $this->content = file_get_contents($file);
+      if (!$this->content) throw new Exception("Error while getting file content");
+
       while ($line = fgetcsv($fd)) {
         $this->lines[] = $line;
       }

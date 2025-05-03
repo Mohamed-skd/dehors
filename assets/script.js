@@ -1,17 +1,12 @@
-import { errorLog } from "./scripts/base.js";
-import { StringFuncs, DomFuncs, FetchFuncs } from "./scripts/client.js";
-import { TopButton, ThemeSetter } from "./scripts/lib.js";
+import { StringFn, FetchFn } from "./scripts/lib.js";
+import { DomFn } from "./scripts/client.js";
 
 // UTILS
-const strFn = new StringFuncs();
-const domFn = new DomFuncs();
-const fetchFn = new FetchFuncs();
+const strFn = new StringFn();
+const fetchFn = new FetchFn();
+const domFn = new DomFn();
 
 // APP
-new ThemeSetter();
-new TopButton();
-
-// nav
 const products = domFn.select("#products");
 const navSearch = domFn.select("nav > input");
 const navSect = domFn.select("nav > div.flex");

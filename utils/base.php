@@ -1,5 +1,4 @@
 <?php
-// LOGGERS 
 function logInfo(string $message)
 {
   echo "\nℹ️ $message ℹ️\n";

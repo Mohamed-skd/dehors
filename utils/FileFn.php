@@ -35,15 +35,6 @@ class FileFn
     return array_map(fn($name) => "$dir/$name", array_values(array_diff(scandir($dir), [".", ".."])));
   }
 
-  function loadJson(string $file)
-  {
-    if (!file_exists($file)) throw new Exception("No file: $file.");
-    if (pathinfo($file, PATHINFO_EXTENSION) !== "json") throw new Exception("Invalid json: $file.");
-
-    $fileContent = file_get_contents($file);
-    return json_decode($fileContent, true);
-  }
-
   function downFile(string $file, string $filename = "data.json", string $type = "application/json")
   {
     if (!file_exists($file)) throw new Exception("Invalid file: $file.");

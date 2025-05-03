@@ -1,8 +1,8 @@
 <?php
 
-namespace Func;
+namespace Lib;
 
-class DomFn
+class Dom
 {
   function create(string $tag, string $content, array $attributes = [], bool $open = true)
   {

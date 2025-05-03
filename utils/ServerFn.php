@@ -15,7 +15,7 @@ class ServerFn
     exit;
   }
 
-  function event(?string $data = null, string $event = "open")
+  function sendEvent(?string $data = null, string $event = "open")
   {
     $id = uniqid();
     $data = json_encode($data);
@@ -39,10 +39,5 @@ class ServerFn
   {
     header("location:" . $location);
     exit;
-  }
-
-  function notify(string $content, string $type = "")
-  {
-    $_SESSION["notification"] = ["content" => $content, "type" => $type];
   }
 }

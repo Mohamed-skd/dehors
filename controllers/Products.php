@@ -4,19 +4,17 @@ namespace Controller;
 
 use Error;
 use Exception;
-use Func\FileFn;
+use Lib\Json;
 
 class Products
 {
-  protected FileFn $fileFn;
   public array $list;
   public array $cats = [];
 
   function __construct(string $file)
   {
     try {
-      $this->fileFn = new FileFn();
-      $this->list = $this->fileFn->loadJson($file);
+      $this->list = (new Json($file))->parsed;
 
       foreach ($this->list as &$prod) {
         $this->cats[$prod["cat"]][] = $prod;
