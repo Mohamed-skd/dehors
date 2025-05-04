@@ -2,7 +2,6 @@
 
 namespace Lib;
 
-use Error;
 use Exception;
 
 class Json
@@ -14,37 +13,32 @@ class Json
 
   function __construct(public string $file)
   {
-    try {
-      if (!file_exists($this->file)) throw new Exception("No file: {$this->file}");
-      if (pathinfo($this->file, PATHINFO_EXTENSION) !== "json") throw new Exception("Invalid json: {$this->file}");
+    if (!file_exists($this->file)) throw new Exception("No file: {$this->file}");
+    if (pathinfo($this->file, PATHINFO_EXTENSION) !== "json") throw new Exception("Invalid json: {$this->file}");
 
-      $this->domFn = new Dom();
-      $this->content = file_get_contents($this->file);
-      if (!$this->content) throw new Exception("Error while getting file content");
+    $this->domFn = new Dom();
+    $this->content = file_get_contents($this->file);
+    if (!$this->content) throw new Exception("Error while getting file content");
 
-      $this->parsed = json_decode($this->content, true);
-      if (!$this->parsed) throw new Exception("Error while parsing json");
-      $this->canProceed = true;
-    } catch (Exception | Error $err) {
-      errorLog($err);
-    }
+    $this->parsed = json_decode($this->content, true);
+    if (!$this->parsed) throw new Exception("Error while parsing json");
+    $this->canProceed = true;
   }
 
   function toHtml(string $type = "table", bool $outfile = false)
   {
-    try {
-      if (!$this->canProceed) return $this;
-      if (!$this->isObjectsArray()) throw new Exception("Invalid format");
+    if (!$this->canProceed) return $this;
+    if (!$this->isObjectsArray()) throw new Exception("Invalid format");
 
-      $types = [
-        "table" => $this->toHtmlTable(),
-        "list" => $this->toHtmlList($this->parsed, true),
-      ];
-      if (!isset($types[$type])) throw new Exception("Invalid type: $type");
+    $types = [
+      "table" => $this->toHtmlTable(),
+      "list" => $this->toHtmlList($this->parsed, true),
+    ];
+    if (!isset($types[$type])) throw new Exception("Invalid type: $type");
 
-      $htmlName = basename($this->file, ".json");
-      $htmlContent = $types[$type];
-      $style = "
+    $htmlName = basename($this->file, ".json");
+    $htmlContent = $types[$type];
+    $style = "
 :root {
 font-family: system-ui;
 box-sizing: border-box;
@@ -95,7 +89,7 @@ li {
 font-size: 1.2rem;
 }
 }";
-      $html = "
+    $html = "
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,13 +115,10 @@ $htmlContent
 </html>
       ";
 
-      if ($outfile) {
-        file_put_contents("$htmlName.html", $html);
-      } else {
-        echo $html;
-      }
-    } catch (Exception | Error $err) {
-      return errorLog($err);
+    if ($outfile) {
+      file_put_contents("$htmlName.html", $html);
+    } else {
+      return $html;
     }
   }
 
@@ -140,6 +131,7 @@ $htmlContent
 
   function areArrays()
   {
+    if (!$this->canProceed) return $this;
     return array_all($this->parsed, function ($obj) {
       return is_array($obj);
     });
@@ -147,6 +139,7 @@ $htmlContent
 
   function areSameFields()
   {
+    if (!$this->canProceed) return $this;
     $baseKeys = array_keys($this->parsed[0]);
 
     return array_all($this->parsed, function ($obj) use ($baseKeys) {

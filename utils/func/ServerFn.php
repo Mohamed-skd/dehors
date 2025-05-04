@@ -2,12 +2,8 @@
 
 namespace Func;
 
-use CurlHandle;
-
 class ServerFn
 {
-  public ?CurlHandle $curl = null;
-
   function resJson(mixed $value)
   {
     header("content-type:application/json");
@@ -24,14 +20,14 @@ class ServerFn
 
   function fetch(string $link, bool $return = true, ?array $opts = null)
   {
-    $this->curl = curl_init($link);
+    $curl = curl_init($link);
 
     if (isset($opts)) {
-      curl_setopt_array($this->curl, $opts);
+      curl_setopt_array($curl, $opts);
     }
 
-    curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, $return);
-    $exec = curl_exec($this->curl);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, $return);
+    $exec = curl_exec($curl);
     return $exec ? json_decode($exec, true) : null;
   }
 

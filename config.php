@@ -7,7 +7,7 @@ session_start();
 
 // const SITE = "https://mohsd-dehors.free.nf/";
 const SITE = "http://localhost:8080/";
-const STORAGE = SRC . "utils/storage/";
+const STORAGE = SRC . "storage/";
 const CMPS = SRC . "components/";
 // const ASSETS = SITE . "dist/";
 const ASSETS = SITE . "assets/";

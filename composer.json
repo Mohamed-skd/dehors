@@ -7,7 +7,7 @@
   "autoload": {
     "psr-4": {
       "Util\\": "utils/",
-      "Func\\": "utils/",
+      "Func\\": "utils/func/",
       "Lib\\": "utils/lib/",
       "Controller\\": "controllers/",
       "Model\\": "models/"

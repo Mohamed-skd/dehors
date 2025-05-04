@@ -11,6 +11,10 @@ class Products
   public array $list;
   public array $cats = [];
 
+  /**
+   * Products
+   * @param string $file Json file to construct the products list
+   */
   function __construct(string $file)
   {
     try {
@@ -25,12 +29,20 @@ class Products
     }
   }
 
-  function getProduct(string $name)
+  /**
+   * Get search result 
+   * @param string $search Product to search
+   */
+  function getProduct(string $search)
   {
-    return array_values(array_filter($this->list, function ($val) use ($name) {
-      return str_contains(strtolower($val["name"]), strtolower($name));
+    return array_values(array_filter($this->list, function ($val) use ($search) {
+      return str_contains(strtolower($val["name"]), strtolower($search));
     }));
   }
+  /**
+   * Get a category of products
+   * @param string $cat The category
+   */
   function getCat(string $cat)
   {
     return $this->cats[$cat] ?? [];
