@@ -38,7 +38,6 @@ async function search() {
 /**
  * Sort view by category
  * @param {PointerEvent} e Event
- * @returns
  */
 async function sort(e) {
   try {
