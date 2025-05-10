@@ -1,5 +1,6 @@
 import { StringFn, FetchFn } from "./scripts/lib.js";
 import { DomFn } from "./scripts/client.js";
+import { errorLog } from "./scripts/base.js";
 
 // UTILS
 const strFn = new StringFn();
@@ -14,6 +15,12 @@ const navBts = domFn.selectAll("nav > div.flex > button");
 let isLoading = false;
 let timeout;
 
+function updateProductView(res) {
+  navBts.forEach((bt) => domFn.modClass(bt, "selected", "del"));
+  domFn.removeChildren(products);
+  domFn.modClass(products, "loading", "del");
+  domFn.appendHtml(products, res);
+}
 async function search() {
   try {
     clearTimeout(timeout);
@@ -25,11 +32,7 @@ async function search() {
     history.replaceState(null, null, fetchFn.objToHttpReq(payload));
     timeout = setTimeout(async () => {
       const res = await fetchFn.post(payload, "text");
-
-      navBts.forEach((bt) => domFn.modClass(bt, "selected", "del"));
-      domFn.removeChildren(products);
-      domFn.modClass(products, "loading", "del");
-      domFn.appendHtml(products, res);
+      updateProductView(res);
     }, 400);
   } catch (err) {
     return errorLog(err);
@@ -54,13 +57,9 @@ async function sort(e) {
     };
     history.replaceState(null, null, fetchFn.objToHttpReq(payload));
     const res = await fetchFn.post(payload, "text");
-
-    navBts.forEach((bt) => domFn.modClass(bt, "selected", "del"));
+    updateProductView(res);
     domFn.modClass(bt, "selected");
     isLoading = false;
-    domFn.removeChildren(products);
-    domFn.modClass(products, "loading", "del");
-    domFn.appendHtml(products, res);
   } catch (err) {
     return errorLog(err);
   }
