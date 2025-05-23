@@ -5,7 +5,7 @@
 <meta property="og:description" content="<?= DESC ?>">
 <meta property="og:type" content="website">
 <meta property="og:url" content="<?= SITE ?>">
-<meta property="og:image" content="<?= IMGS . "vignette.jpg" ?>">
+<meta property="og:image" content="<?= IMGS . "vignette.png" ?>">
 <base target="_blank" />
 <link rel="canonical" href="<?= SITE ?>" />
 <link rel="shortcut icon" href="<?= IMGS . "icon.png" ?>" type="image/png" />
