@@ -10,6 +10,8 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="400">
 <meta property="og:image:height" content="300">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@Mohamed40617216">
 <meta name="twitter:title" content="<?= $title ?>">
 <meta name="twitter:description" content="<?= DESC ?>">
 <meta name="twitter:image" content="<?= IMGS . "vignette.png" ?>">
