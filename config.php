@@ -12,7 +12,7 @@ const CMPS = SRC . "components/";
 // const ASSETS = SITE . "dist/";
 const ASSETS = SITE . "assets/";
 const IMGS = SITE . "assets/imgs/";
-const DESC = "";
+const DESC = "Tout pour jouir du soleil, loin du stress !";
 
 $strFn = new Func\StringFn();
 
